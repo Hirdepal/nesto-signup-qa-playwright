@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      BASE_URL: https://app.qa.nesto.ca
       SIGNUP_EMAIL_DOMAIN: gmail.com
       CI: "true"
       PW_RECORD_ARTIFACTS: "false"

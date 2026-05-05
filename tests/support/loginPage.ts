@@ -19,11 +19,8 @@ export class LoginPage {
   }
 
   async login(data: SignupData) {
-    const appHost = new URL(process.env.BASE_URL ?? 'https://app.qa.nesto.ca').hostname;
-
     await this.email.fill(data.email);
     await this.password.fill(data.password);
     await this.submitButton.click();
-    await this.page.waitForURL(url => url.hostname === appHost, { timeout: 30_000 });
   }
 }

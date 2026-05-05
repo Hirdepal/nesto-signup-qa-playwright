@@ -10,7 +10,6 @@ RUN npm ci
 COPY --chown=pwuser:pwuser . .
 
 ENV CI=true
-ENV BASE_URL=https://app.qa.nesto.ca
 ENV SIGNUP_EMAIL_DOMAIN=gmail.com
 ENV PW_RECORD_ARTIFACTS=false
 
