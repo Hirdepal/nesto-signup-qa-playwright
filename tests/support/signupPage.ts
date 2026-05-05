@@ -164,7 +164,7 @@ export class SignupPage {
     await this.expectFieldError(this.confirmPassword, errors.passwordMismatch);
   }
 
-  async expectRequiredErrors(language: SupportedLanguage) {
+  async expectEmptyFormErrors(language: SupportedLanguage) {
     const errors = signupCopy[language].errors;
 
     await this.expectFieldError(this.firstName, errors.required);

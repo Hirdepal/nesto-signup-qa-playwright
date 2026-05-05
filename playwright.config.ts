@@ -5,13 +5,15 @@ const isCI = !!process.env.CI;
 const recordArtifacts = process.env.PW_RECORD_ARTIFACTS === 'true';
 const configuredWorkers = Number(process.env.PLAYWRIGHT_WORKERS ?? 1);
 const workers = Number.isFinite(configuredWorkers) && configuredWorkers > 0 ? configuredWorkers : 1;
+const TEST_TIMEOUT_MS = 45_000;
+const EXPECT_TIMEOUT_MS = 10_000;
 
 export default defineConfig({
   testDir: './tests',
   outputDir: 'test-results/artifacts',
-  timeout: 45_000,
+  timeout: TEST_TIMEOUT_MS,
   expect: {
-    timeout: 10_000
+    timeout: EXPECT_TIMEOUT_MS
   },
   fullyParallel: false,
   forbidOnly: isCI,

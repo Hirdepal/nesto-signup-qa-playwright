@@ -3,6 +3,7 @@ import { expect, type Page, type Request, type Response } from '@playwright/test
 const ACCOUNT_CREATION_ATTEMPTS = 2;
 const ACCOUNT_REQUEST_TIMEOUT_MS = 3_000;
 const ACCOUNT_RESPONSE_TIMEOUT_MS = 35_000;
+const NO_ACCOUNT_REQUEST_TIMEOUT_MS = 1_000;
 
 export function isAccountCreationRequest(request: Request) {
   return request.method() === 'POST' && request.url().includes('/api/accounts');
@@ -56,7 +57,7 @@ function waitForAccountCreationRequest(page: Page) {
 export async function expectNoAccountCreationRequest(page: Page, action: () => Promise<void>) {
   // Negative UI tests should fail if the form sends a create-account request anyway.
   const accountRequestPromise = page
-    .waitForRequest(isAccountCreationRequest, { timeout: 1_000 })
+    .waitForRequest(isAccountCreationRequest, { timeout: NO_ACCOUNT_REQUEST_TIMEOUT_MS })
     .then(request => request)
     .catch(() => null);
 

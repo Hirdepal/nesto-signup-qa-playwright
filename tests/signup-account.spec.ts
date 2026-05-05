@@ -7,6 +7,7 @@ import { buildSignupData, languageFromProject } from './support/signupData';
 import { SignupPage } from './support/signupPage';
 
 const ACCOUNT_FLOW_TIMEOUT_MS = 90_000;
+const GET_A_QUOTE_TIMEOUT_MS = 20_000;
 
 test.describe('signup account creation', () => {
   test('@smoke @account creates a valid account and verifies the user can log back in', async ({ page }, testInfo) => {
@@ -49,7 +50,7 @@ test.describe('signup account creation', () => {
     });
 
     // Creating the account is not enough; the new credentials should work after logout.
-    await page.waitForURL(/\/getaquote/, { timeout: 20_000 });
+    await page.waitForURL(/\/getaquote/, { timeout: GET_A_QUOTE_TIMEOUT_MS });
     await app.expectSignedIn(data);
 
     await app.logout();

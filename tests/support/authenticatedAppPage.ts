@@ -1,6 +1,9 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import type { SignupData } from './signupData';
 
+const LOGIN_PAGE_TIMEOUT_MS = 30_000;
+const DISABLE_ACCOUNT_PAGE_TIMEOUT_MS = 20_000;
+
 export class AuthenticatedAppPage {
   menuButton: Locator;
   logoutMenuItem: Locator;
@@ -28,7 +31,7 @@ export class AuthenticatedAppPage {
     await expect(this.logoutMenuItem).toBeVisible();
     await this.logoutMenuItem.click();
     await this.page.waitForURL(url => url.hostname === 'auth.nesto.ca' && url.pathname === '/login', {
-      timeout: 30_000
+      timeout: LOGIN_PAGE_TIMEOUT_MS
     });
   }
 
@@ -39,6 +42,6 @@ export class AuthenticatedAppPage {
     await this.userSettingsMenuItem.click();
     await expect(this.deleteAccountButton).toBeVisible();
     await this.deleteAccountButton.click();
-    await this.page.waitForURL(/\/disable-account/, { timeout: 20_000 });
+    await this.page.waitForURL(/\/disable-account/, { timeout: DISABLE_ACCOUNT_PAGE_TIMEOUT_MS });
   }
 }

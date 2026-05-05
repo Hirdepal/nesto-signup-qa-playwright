@@ -1,6 +1,8 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { isAccountDeletionResponse } from './accountApi';
 
+const ACCOUNT_DELETED_TIMEOUT_MS = 20_000;
+
 export class DisableAccountPage {
   reason: Locator;
   confirmation: Locator;
@@ -23,7 +25,7 @@ export class DisableAccountPage {
     const deletionResponse = await deletionResponsePromise;
 
     expect(deletionResponse.status()).toBe(204);
-    await this.page.waitForURL(/\/account-deleted/, { timeout: 20_000 });
+    await this.page.waitForURL(/\/account-deleted/, { timeout: ACCOUNT_DELETED_TIMEOUT_MS });
     await expect(this.page.getByText(/account has been successfully deleted/i)).toBeVisible();
   }
 }

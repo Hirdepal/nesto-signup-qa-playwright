@@ -10,10 +10,10 @@ test.describe('signup validation', () => {
 
     await signup.goto(language);
 
-    // Empty required fields should be caught in the browser, before account creation is attempted.
+    // Empty phone, email, and password currently show format/length errors. See BUG-003.
     await expectNoAccountCreationRequest(page, async () => {
       await signup.submit();
-      await signup.expectRequiredErrors(language);
+      await signup.expectEmptyFormErrors(language);
     });
   });
 
