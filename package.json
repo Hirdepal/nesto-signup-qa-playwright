@@ -1,0 +1,22 @@
+{
+  "name": "nesto-signup-qa-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright TypeScript automation suite for nesto signup technical exercise.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "preflight": "npm run typecheck && npm audit --audit-level=moderate",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "test:parallel": "playwright test --workers=2",
+    "test:smoke": "playwright test --grep @smoke",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.59.1",
+    "@types/node": "25.6.0",
+    "typescript": "5.9.3"
+  }
+}

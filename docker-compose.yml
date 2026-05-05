@@ -1,0 +1,12 @@
+services:
+  nesto-signup-qa-playwright:
+    build: .
+    environment:
+      BASE_URL: ${BASE_URL:-https://app.qa.nesto.ca}
+      SIGNUP_EMAIL_DOMAIN: ${SIGNUP_EMAIL_DOMAIN:-gmail.com}
+      CI: "true"
+      PW_RECORD_ARTIFACTS: ${PW_RECORD_ARTIFACTS:-false}
+    volumes:
+      - ./playwright-report:/app/playwright-report
+      - ./test-results:/app/test-results
+    command: npm test

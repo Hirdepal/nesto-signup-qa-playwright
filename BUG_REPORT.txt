@@ -1,0 +1,106 @@
+Bug Report
+==========
+
+BUG-001: French phone country selector is still in English
+Priority: P2
+Environment: https://app.qa.nesto.ca/fr/signup
+
+Steps:
+1. Open /fr/signup.
+2. Inspect the phone country selector.
+
+Actual:
+- The page has html lang="fr".
+- The phone country selector has aria-label="Phone number country".
+- The dropdown still contains English values such as "International" and "United States".
+
+Expected:
+- The selector label and options should be in French.
+
+Impact:
+- The visual issue is small, but the accessibility issue is not. Screen reader users land on a French page and then hear English control text in the phone field.
+- I would treat this as a French localization and accessibility defect, not just copy polish.
+
+
+BUG-002: Province defaults to Ontario before selection
+Priority: P1
+Environment: https://app.qa.nesto.ca/signup
+
+Steps:
+1. Open /signup.
+2. Do not interact with Province of purchase.
+3. Fill the other required fields with valid values.
+4. Submit the form.
+
+Actual:
+- The province field appears to show placeholder text.
+- The selected value is already ON.
+- POST /api/accounts returns 201 with region: "ON".
+
+Expected:
+- If province is required, no province should be selected by default.
+- If Ontario is the default, the UI should clearly show Ontario as selected.
+
+Impact:
+- Users outside Ontario may create accounts with the wrong province.
+
+Why I would prioritize it:
+- This is the bug I would raise first. Province is not just form decoration; it can affect routing, eligibility, advisor handoff, and the mortgage path shown later. A silent Ontario value is worse than a visible validation error because the user may never know the account was created with the wrong province.
+
+
+BUG-003: Empty fields show format errors
+Priority: P3
+Environment: https://app.qa.nesto.ca/signup and /fr/signup
+
+Steps:
+1. Open the signup page.
+2. Submit the empty form.
+
+Actual:
+- First name and last name show required messages.
+- Empty phone shows "Invalid value".
+- Empty email shows "Invalid email".
+- Empty password shows "Minimum of 12 letters required".
+
+Expected:
+- Empty required fields should show required messages.
+- Format or length messages should appear after a value is entered.
+
+Impact:
+- The validation feedback is confusing. I would fix it after the data accuracy issues.
+
+
+BUG-004: Password message says letters but digits are accepted
+Priority: P3
+Environment: https://app.qa.nesto.ca/signup and /fr/signup
+
+Steps:
+1. Submit a short password.
+2. Submit a valid password containing digits, such as Automation12345.
+
+Actual:
+- English message says "Minimum of 12 letters required".
+- French message says "Minimum de 12 lettres requises".
+- A password containing digits is accepted.
+
+Expected:
+- The message should say "characters" or "caracteres", unless the rule is letters only.
+
+Impact:
+- Users may think digits or symbols are not allowed, even though they work.
+
+
+BUG-005: Backend failure shows a vague message
+Priority: P2
+Environment: https://app.qa.nesto.ca/signup
+
+Observed:
+- During testing, POST /api/accounts returned 503 with body "unconditional drop overload".
+- The UI displayed: "Something went wrong! Please try again and if you continue to have trouble feel free to contact your advisor".
+
+Expected:
+- The message should include clear retry guidance and a support path for new users.
+
+Impact:
+- New signup users may not know what to do next.
+- A temporary backend issue can turn into a lost signup if the user has no advisor yet. I would at least give a clear retry suggestion and a general support path.

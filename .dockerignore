@@ -1,0 +1,15 @@
+.git/
+.github/
+node_modules/
+playwright-report/
+test-results/
+.env
+.env.*
+.auth/
+storageState*.json
+auth-state*.json
+*.pem
+*.p12
+*.pfx
+*.key
+*.log
